@@ -1,3 +1,4 @@
+import { FieldModule } from './fields/field.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -10,10 +11,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    TagsModule
+    TagsModule,
+    FieldModule,
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   providers: [
   ],

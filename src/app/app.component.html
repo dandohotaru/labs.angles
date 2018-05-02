@@ -2,14 +2,25 @@
 
   <div style="padding-bottom: 15px">
     <strong>Name</strong>
-    <div>
-      <input [(ngModel)]="company.name" formControlName="name" /> 
-    </div>
+    <app-field>
+      <input formControlName="name"/>
+    </app-field>
   </div>
 
   <div style="padding-bottom: 15px">
     <strong>Tags</strong>
-    <tags [(ngModel)]="company.tags" formControlName="tags"></tags>
+
+    <app-tags 
+      formControlName="tags" 
+      title="Tags without ngmodel">
+    </app-tags>
+
+    <app-tags 
+      formControlName="others" 
+      [(ngModel)]="company.tags" 
+      title="Tags with ngmodel">
+    </app-tags>
+
     <div *ngIf="form.get('tags').hasError('empty')" class="alert alert-danger" role="alert">
       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
       <span class="sr-only">Error:</span>

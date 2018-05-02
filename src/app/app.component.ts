@@ -27,13 +27,17 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.form = this.builder.group({
-      name: ['', Validators.required],
-      tags: ['', (control) => {
-        return control.value == null || control.value.length === 0
+
+    let empty = (control)=>{
+      return control.value == null || control.value.length === 0
           ? { empty: true }
-          : null
-      }]
+          : null;
+    };
+
+    this.form = this.builder.group({
+      name: [this.company.name, Validators.required],
+      tags: [this.company.tags, empty],
+      others: [[], empty]
     });
   }
 

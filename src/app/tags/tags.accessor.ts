@@ -11,7 +11,7 @@ const TagsValueProvider: Provider = {
 }
 
 @Directive({
-  selector: 'tags',
+  selector: 'app-tags',
   host: { '(changed)': 'onChange($event)' },
   providers: [TagsValueProvider]
 })

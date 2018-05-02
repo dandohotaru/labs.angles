@@ -3,7 +3,7 @@ import { Component,Output, EventEmitter  } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
-	selector: 'tags',
+	selector: 'app-tags',
 	templateUrl: './tags.component.html',
 	styleUrls: ['./tags.component.css']
 })
