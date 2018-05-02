@@ -1,0 +1,8 @@
+.tags input {
+  width: 50px; 
+  font-size: 14px;
+}
+
+.tag {
+  cursor: pointer;
+}

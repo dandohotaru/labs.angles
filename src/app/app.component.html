@@ -1,0 +1,26 @@
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+
+  <div style="padding-bottom: 15px">
+    <strong>Name</strong>
+    <div>
+      <input [(ngModel)]="company.name" formControlName="name" /> 
+    </div>
+  </div>
+
+  <div style="padding-bottom: 15px">
+    <strong>Tags</strong>
+    <tags [(ngModel)]="company.tags" formControlName="tags"></tags>
+    <div *ngIf="form.get('tags').hasError('empty')" class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      Tags cannot be empty
+    </div>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+<div style="padding-top: 15px">
+  <strong>Debug</strong>
+  <pre>{{form.value | json}}</pre>
+</div>

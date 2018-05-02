@@ -1,0 +1,15 @@
+<div *ngIf="tags" class="tags">
+
+  <div>
+    <input [(ngModel)]="current" />
+    <button type="button" class="btn btn-secondary" (click)="add()">Add</button>
+  </div>
+
+  <div>
+    <span *ngFor="let tag of tags" class="label label-default tag" (click)="remove(tag)">
+      {{tag}}
+      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </span>
+  </div>
+
+</div>
