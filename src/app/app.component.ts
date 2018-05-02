@@ -5,6 +5,7 @@ export interface Company {
   id: number,
   name: string,
   tags: string[],
+  stars: number,
 }
 
 @Component({
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
       id: 101,
       name: "Greek Heroes",
       tags: ["immortals", "mortals"],
+      stars: 3
     };
   }
 
@@ -36,8 +38,9 @@ export class AppComponent implements OnInit {
 
     this.form = this.builder.group({
       name: [this.company.name, Validators.required],
+      stars: [this.company.stars],
       tags: [this.company.tags, empty],
-      others: [[], empty]
+      others: [[], empty],
     });
   }
 

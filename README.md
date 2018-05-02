@@ -1,7 +1,7 @@
 # About
 the one with custom form input control using ControlValueAccessor 
 - [x] tags
-- [ ] stars
+- [x] stars
 - [ ] markdown
 
 ## Problem

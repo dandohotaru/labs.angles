@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { forwardRef, HostBinding } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-const StarProvider = {
+const StarsProvider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => StarsComponent),
   multi: true
@@ -12,7 +12,7 @@ const StarProvider = {
   selector: 'app-stars',
   templateUrl: './stars.component.html',
   styleUrls: ['./stars.component.css'],
-  providers: [StarProvider],
+  providers: [StarsProvider],
 })
 export class StarsComponent implements ControlValueAccessor, OnInit {
 
