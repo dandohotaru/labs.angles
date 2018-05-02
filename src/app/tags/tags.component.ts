@@ -26,7 +26,7 @@ export class TagsComponent {
 
 	public remove(tag: string) {
 		var index = this.tags.indexOf(tag, 0);
-		if (index) {
+		if (index != undefined) {
 			this.tags.splice(index, 1);
 			this.changed.emit(this.tags);
 		}

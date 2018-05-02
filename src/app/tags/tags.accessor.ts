@@ -17,8 +17,9 @@ const TagsValueProvider: Provider = {
 })
 export class TagsValueAccessor implements ControlValueAccessor {
 
-  public onChange = (value) => { };
-  public onTouched = () => { };
+  public onChange : (value) => void;
+
+  public onTouched : () => void;
 
   constructor(private host: TagsComponent) { }
 
@@ -26,11 +27,11 @@ export class TagsValueAccessor implements ControlValueAccessor {
     this.host.setValue(value);
   }
 
-  public registerOnChange(fn: (value: any) => void): void {
-    this.onChange = fn;
+  public registerOnChange(callback: (value: any) => void): void {
+    this.onChange = callback;
   }
 
-  public registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
+  public registerOnTouched(callback: () => void): void {
+    this.onTouched = callback;
   }
 }
