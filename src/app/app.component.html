@@ -1,17 +1,22 @@
 <form [formGroup]="form" (ngSubmit)="submit(form)">
 
+  <!-- Name -->
   <div style="padding-bottom: 15px">
     <strong>Name</strong>
     <app-field>
-      <input formControlName="name"/>
+      <input formControlName="name" />
     </app-field>
   </div>
 
+  <!-- Stars -->
   <div style="padding-bottom: 15px">
     <strong>Stars</strong>
-    <app-stars formControlName="stars"></app-stars>
+    <div>
+      <app-stars formControlName="stars"></app-stars>
+    </div>
   </div>
 
+  <!-- Tags -->
   <div style="padding-bottom: 15px">
     <strong>Tags</strong>
 
@@ -33,9 +38,11 @@
     </div>
   </div>
 
+  <!-- Submit -->
   <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 
+<!-- Debug -->
 <div style="padding-top: 15px">
   <strong>Debug</strong>
   <pre>{{form.value | json}}</pre>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 
 export interface Company {
   id: number,
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
 
     this.form = this.builder.group({
       name: [this.company.name, Validators.required],
-      stars: [this.company.stars],
+      stars: new FormControl({value: this.company.stars, disabled: false}),
       tags: [this.company.tags, empty],
       others: [[], empty],
     });
