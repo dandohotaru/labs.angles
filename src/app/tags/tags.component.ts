@@ -9,7 +9,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 })
 export class TagsComponent {
 	
-	@Output() 
+	@Output("changed") 
 	public changed: EventEmitter<string[]>;
 
 	public tags: string[];

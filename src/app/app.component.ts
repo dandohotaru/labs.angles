@@ -51,6 +51,10 @@ export class AppComponent implements OnInit {
     };
     console.log(payload);
   }
+
+  public log(event: any) {
+    console.log(event);
+  }
 }
 
 export function notempty(control: FormControl) {

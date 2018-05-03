@@ -6,7 +6,7 @@ import { TagsComponent } from './tags.component';
 
 const TagsValueProvider: Provider = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => TagsValueAccessor),
+  useExisting: forwardRef(() => TagsAccessor),
   multi: true
 }
 
@@ -15,13 +15,14 @@ const TagsValueProvider: Provider = {
   host: { '(changed)': 'onChange($event)' },
   providers: [TagsValueProvider]
 })
-export class TagsValueAccessor implements ControlValueAccessor {
+export class TagsAccessor implements ControlValueAccessor {
 
   public onChange : (value) => void;
 
   public onTouched : () => void;
 
-  constructor(private host: TagsComponent) { }
+  constructor(private host: TagsComponent) { 
+  }
 
   public writeValue(value: string[]): void {
     this.host.tags = value;

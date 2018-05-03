@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TagsComponent } from './tags.component';
-import { TagsValueAccessor } from './tags.accessor';
+import { TagsAccessor } from './tags.accessor';
 
 @NgModule({
   imports: [
@@ -13,11 +13,11 @@ import { TagsValueAccessor } from './tags.accessor';
   ],
   declarations:[
     TagsComponent,
-    TagsValueAccessor,
+    TagsAccessor,
   ],
   exports:[
     TagsComponent,
-    TagsValueAccessor
+    TagsAccessor
   ],
 })
 export class TagsModule { }

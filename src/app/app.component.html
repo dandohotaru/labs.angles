@@ -21,14 +21,16 @@
     <strong>Tags</strong>
 
     <app-tags 
+      title="Tags without ngmodel"
       formControlName="tags" 
-      title="Tags without ngmodel">
+      (changed)="log($event)">
     </app-tags>
 
     <app-tags 
+      title="Tags with ngmodel"
       formControlName="others" 
       [(ngModel)]="company.tags" 
-      title="Tags with ngmodel">
+      (changed)="log($event)">
     </app-tags>
 
     <div *ngIf="form.get('tags').hasError('empty')" class="alert alert-danger" role="alert">
