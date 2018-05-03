@@ -23,8 +23,8 @@ export class TagsValueAccessor implements ControlValueAccessor {
 
   constructor(private host: TagsComponent) { }
 
-  public writeValue(value: any): void {
-    this.host.setValue(value);
+  public writeValue(value: string[]): void {
+    this.host.tags = value;
   }
 
   public registerOnChange(callback: (value: any) => void): void {

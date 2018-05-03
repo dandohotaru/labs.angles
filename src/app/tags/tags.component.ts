@@ -20,10 +20,6 @@ export class TagsComponent {
 		this.changed = new EventEmitter();
 	}
 
-	public setValue(value: string[]) {
-		this.tags = value;
-	}
-
 	public remove(tag: string) {
 		var index = this.tags.indexOf(tag, 0);
 		if (index != undefined) {

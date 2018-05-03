@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 
 export interface Company {
   id: number,
@@ -11,7 +11,13 @@ export interface Company {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styles: []
+  providers: [
+    {
+      provide: NG_VALIDATORS,
+      useValue: notempty,
+      multi: true
+    }
+  ]
 })
 export class AppComponent implements OnInit {
 
@@ -29,18 +35,11 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-
-    let empty = (control)=>{
-      return control.value == null || control.value.length === 0
-          ? { empty: true }
-          : null;
-    };
-
     this.form = this.builder.group({
       name: [this.company.name, Validators.required],
-      stars: new FormControl({value: this.company.stars, disabled: false}),
-      tags: [this.company.tags, empty],
-      others: [[], empty],
+      stars: new FormControl({ value: this.company.stars, disabled: false }),
+      tags: [this.company.tags, notempty],
+      others: [[], notempty],
     });
   }
 
@@ -53,3 +52,9 @@ export class AppComponent implements OnInit {
     console.log(payload);
   }
 }
+
+export function notempty(control: FormControl) {
+  return control.value == null || control.value.length == 0
+    ? { empty: true }
+    : null;
+};
