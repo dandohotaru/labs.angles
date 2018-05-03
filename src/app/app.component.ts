@@ -6,6 +6,7 @@ export interface Company {
   name: string,
   tags: string[],
   stars: number,
+  rated: boolean,
 }
 
 @Component({
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit {
       id: 101,
       name: "Greek Heroes",
       tags: ["immortals", "mortals"],
-      stars: 3
+      stars: 3,
+      rated: false,
     };
   }
 

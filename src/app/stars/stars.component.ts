@@ -47,7 +47,7 @@ export class StarsComponent implements ControlValueAccessor, OnInit {
 
   public writeValue(rating: number): void {
     this.stars = this.stars.map((star, index) => rating > index);
-    this.disabled = rating < 3;
+    this.disabled = rating < 2;
     this.onChange(this.value)
   }
 

@@ -24,52 +24,50 @@ export class RatesComponent implements ControlValueAccessor, OnInit {
     return this.disabled ? 0.25 : 1;
   }
 
-  public rates: boolean[] = Array(5).fill(false);
+  public ratings: boolean[];
+  
+  public rating: number;
 
-  public onChange = (rating: number) => { };
+  public onChange : (rating: number) => void;
 
-  public onTouched = () => { };
+  public onTouched : () => void;
+
+  constructor() {
+    this.ratings = Array(5).fill(false);
+  }
 
   public ngOnInit(): void {
   }
 
-  get value(): number {
-    return this.rates.reduce((result, current) => {
-      return result + (current ? 1 : 0);
-    }, 0);
-  }
-
-  public rate(rating: number) {
-    if (!this.disabled) {
-      this.writeValue(rating);
-    }
-  }
-
   public writeValue(rating: number): void {
-    this.rates = this.rates.map((star, index) => rating > index);
-    this.disabled = rating < 3;
-    this.onChange(this.value)
+    this.rate(rating);
   }
 
-  public registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
+  public registerOnTouched(callback: () => void): void {
+    this.onTouched = callback;
   }
 
-  public registerOnChange(fn: (rating: number) => void): void {
-    this.onChange = fn;
+  public registerOnChange(callback: (rating: number) => void): void {
+    this.onChange = callback;
   }
 
-  public setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+  public setDisabledState(disabled: boolean): void {
+    this.disabled = disabled;
   }
 
-  public click(star: boolean, index: number) {
-    this.onTouched();
-    let current = star
-      ? this.value > index + 1
-        ? 1
-        : 0
-      : 1;
-    this.rate(index + current);
+  public click(index: number) {
+    this.rate(index + 1);
+    this.onChange(index+1);
+  }
+
+  private rate(rating: number) {
+    //this.onTouched();
+    if (this.disabled)
+      return;
+    this.ratings = this.ratings.map((current, index) => {
+      return index < rating
+    });
+    this.disabled = rating < 2;
+    //this.onChange(rating);
   }
 }
