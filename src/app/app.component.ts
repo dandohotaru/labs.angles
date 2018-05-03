@@ -50,29 +50,4 @@ export class AppComponent implements OnInit {
   public log(event: any) {
     console.log(event);
   }
-
-  public get errors() {
-    return errors(this.form);
-  }
-}
-
-export function errors(form: FormGroup) {
-  return Object
-    .keys(form.controls)
-    .reduce((results: { context: string, key: string, value: any }[], current: string) => {
-
-      let errors = form.get(current).errors;
-      if (errors) {
-        let found = Object
-          .keys(errors)
-          .map(key => ({
-            context: current,
-            key: key,
-            value: errors[key],
-          }));
-        results.push(...found);
-      };
-
-      return results;
-    }, []);
 }

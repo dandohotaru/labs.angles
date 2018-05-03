@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 import { NG_VALIDATORS } from '@angular/forms';
 
 import { CustomValidators } from './custom.validators';
-import { ErrorsDirective } from './errors.directive';
+import { ErrorsComponent } from './errors.component';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    ErrorsDirective,
+    ErrorsComponent,
   ],
   exports: [
-    ErrorsDirective
+    ErrorsComponent
   ],
   providers: [
     {

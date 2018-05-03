@@ -57,13 +57,13 @@
 </form>
 
 <!-- Debug -->
-<div apperrors [form]="form" style="padding-top: 15px">
+<div style="padding-top: 15px">
 
   <strong>Form</strong>
   <pre>{{form.status | json}}</pre>
   <pre>{{form.value | json}}</pre>
 
   <strong>Errors</strong>
-  <pre>{{errors | json}}</pre>
+  <app-errors [form]="form"></app-errors>
 </div>
 
