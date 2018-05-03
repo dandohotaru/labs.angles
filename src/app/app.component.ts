@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.form = this.builder.group({
       name: [this.company.name, Validators.required],
-      stars: new FormControl({ value: this.company.stars, disabled: false }),
+      stars: [this.company.stars],
       tags: [this.company.tags, notempty],
       others: [[], notempty],
     });

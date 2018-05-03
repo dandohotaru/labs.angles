@@ -1,0 +1,7 @@
+<span *ngFor="let rate of rates; let i = index" (click)="click(rate, i)">
+
+  <ng-container *ngIf="rate; then starred else dotted"></ng-container>
+  <ng-template #starred>⭐</ng-template>
+  <ng-template #dotted>·</ng-template>
+
+</span>

@@ -2,19 +2,19 @@ import { Component, OnInit, Input } from '@angular/core';
 import { forwardRef, HostBinding } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-const StarsProvider = {
+const RatesProvider = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => StarsComponent),
+  useExisting: forwardRef(() => RatesComponent),
   multi: true
 }
 
 @Component({
-  selector: 'app-stars',
-  templateUrl: './stars.component.html',
-  styleUrls: ['./stars.component.css'],
-  providers: [StarsProvider],
+  selector: 'app-rates',
+  templateUrl: './rates.component.html',
+  styleUrls: ['./rates.component.css'],
+  providers: [RatesProvider],
 })
-export class StarsComponent implements ControlValueAccessor, OnInit {
+export class RatesComponent implements ControlValueAccessor, OnInit {
 
   @Input("lock")
   public disabled = false;
@@ -24,7 +24,7 @@ export class StarsComponent implements ControlValueAccessor, OnInit {
     return this.disabled ? 0.25 : 1;
   }
 
-  public stars: boolean[] = Array(5).fill(false);
+  public rates: boolean[] = Array(5).fill(false);
 
   public onChange = (rating: number) => { };
 
@@ -34,7 +34,7 @@ export class StarsComponent implements ControlValueAccessor, OnInit {
   }
 
   get value(): number {
-    return this.stars.reduce((result, current) => {
+    return this.rates.reduce((result, current) => {
       return result + (current ? 1 : 0);
     }, 0);
   }
@@ -46,7 +46,7 @@ export class StarsComponent implements ControlValueAccessor, OnInit {
   }
 
   public writeValue(rating: number): void {
-    this.stars = this.stars.map((star, index) => rating > index);
+    this.rates = this.rates.map((star, index) => rating > index);
     this.disabled = rating < 3;
     this.onChange(this.value)
   }

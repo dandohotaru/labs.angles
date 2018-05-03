@@ -6,15 +6,17 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TagsModule } from './tags/tags.module';
 import { StarsModule } from './stars/stars.module';
+import { RatesModule } from './stars/rates.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    TagsModule,
     FieldModule,
+    TagsModule,
     StarsModule,
+    RatesModule,
   ],
   declarations: [
     AppComponent,
