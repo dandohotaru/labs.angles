@@ -16,22 +16,14 @@ const RatesProvider = {
 })
 export class RatesComponent implements ControlValueAccessor, OnInit {
 
-  @Input("lock")
-  public disabled = false;
-
-  @HostBinding('style.opacity')
-  get opacity() {
-    return this.disabled ? 0.25 : 1;
-  }
-
   public ratings: boolean[];
-  
+
   public rating: number;
 
-  public onChange : (rating: number) => void;
+  public touch: () => void;
 
-  public onTouched : () => void;
-
+  public change: (rating: number) => void;
+  
   constructor() {
     this.ratings = Array(5).fill(false);
   }
@@ -40,34 +32,33 @@ export class RatesComponent implements ControlValueAccessor, OnInit {
   }
 
   public writeValue(rating: number): void {
-    this.rate(rating);
+    this.rating = rating;
+    this.refresh();
   }
 
   public registerOnTouched(callback: () => void): void {
-    this.onTouched = callback;
+    this.touch = callback;
   }
 
   public registerOnChange(callback: (rating: number) => void): void {
-    this.onChange = callback;
-  }
-
-  public setDisabledState(disabled: boolean): void {
-    this.disabled = disabled;
+    this.change = callback;
   }
 
   public click(index: number) {
-    this.rate(index + 1);
-    this.onChange(index+1);
+    this.touch();
+
+    let rating = index + 1;
+    this.rating = rating;
+
+    this.refresh();
+    this.change(rating);
   }
 
-  private rate(rating: number) {
-    //this.onTouched();
-    if (this.disabled)
-      return;
+  public refresh() {
     this.ratings = this.ratings.map((current, index) => {
-      return index < rating
+      return index < this.rating;
     });
-    this.disabled = rating < 2;
-    //this.onChange(rating);
   }
+
+  
 }

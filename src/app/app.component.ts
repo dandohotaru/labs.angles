@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl, AbstractControl, NG_VALIDATORS } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { CustomValidators as Custom } from './shared/validators/custom.validators';
 
 export interface Company {
   id: number,
@@ -12,13 +13,6 @@ export interface Company {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  providers: [
-    {
-      provide: NG_VALIDATORS,
-      useValue: notempty,
-      multi: true
-    }
-  ]
 })
 export class AppComponent implements OnInit {
 
@@ -39,9 +33,8 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.form = this.builder.group({
       name: [this.company.name, Validators.required],
-      stars: [this.company.stars],
-      tags: [this.company.tags, notempty],
-      others: [[], notempty],
+      stars: [this.company.stars, Custom.notlow],
+      tags: [this.company.tags, Custom.notempty],
     });
   }
 
@@ -57,10 +50,29 @@ export class AppComponent implements OnInit {
   public log(event: any) {
     console.log(event);
   }
+
+  public get errors() {
+    return errors(this.form);
+  }
 }
 
-export function notempty(control: FormControl) {
-  return control.value == null || control.value.length == 0
-    ? { empty: true }
-    : null;
-};
+export function errors(form: FormGroup) {
+  return Object
+    .keys(form.controls)
+    .reduce((results: { context: string, key: string, value: any }[], current: string) => {
+
+      let errors = form.get(current).errors;
+      if (errors) {
+        let found = Object
+          .keys(errors)
+          .map(key => ({
+            context: current,
+            key: key,
+            value: errors[key],
+          }));
+        results.push(...found);
+      };
+
+      return results;
+    }, []);
+}

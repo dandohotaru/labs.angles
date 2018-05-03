@@ -12,11 +12,24 @@
   <div style="padding-bottom: 15px">
     <strong>Stars</strong>
     <div>
-      <app-stars formControlName="stars" lock="false"></app-stars>
+      <app-stars 
+        formControlName="stars" 
+        [(ngModel)]="company.stars"
+        lock="false">
+      </app-stars>
     </div>
     <strong>Rates</strong>
     <div>
-      <app-rates formControlName="stars" [lock]="company.rated"></app-rates>
+      <app-rates 
+        formControlName="stars" 
+        [(ngModel)]="company.stars">
+      </app-rates>
+
+      <div *ngIf="form.get('stars').hasError('low')" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{form.get('stars').getError('low')}}
+      </div>
     </div>
   </div>
 
@@ -25,22 +38,16 @@
     <strong>Tags</strong>
 
     <app-tags 
-      title="Tags without ngmodel"
+      title="Tags"
       formControlName="tags"
-      (changed)="log($event)">
-    </app-tags>
-
-    <app-tags 
-      title="Tags with ngmodel"
-      formControlName="others" 
-      [(ngModel)]="company.tags" 
+      [(ngModel)]="company.tags"
       (changed)="log($event)">
     </app-tags>
 
     <div *ngIf="form.get('tags').hasError('empty')" class="alert alert-danger" role="alert">
       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
       <span class="sr-only">Error:</span>
-      Tags cannot be empty
+      {{form.get('tags').getError('empty')}}
     </div>
     
   </div>
@@ -50,8 +57,13 @@
 </form>
 
 <!-- Debug -->
-<div style="padding-top: 15px">
-  <strong>Debug</strong>
+<div apperrors [form]="form" style="padding-top: 15px">
+
+  <strong>Form</strong>
+  <pre>{{form.status | json}}</pre>
   <pre>{{form.value | json}}</pre>
+
+  <strong>Errors</strong>
+  <pre>{{errors | json}}</pre>
 </div>
 
