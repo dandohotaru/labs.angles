@@ -4,16 +4,12 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
 import { Observable } from "rxjs/Observable";
+import * as SimpleMDE from 'simplemde';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ViewChild, ElementRef, InjectionToken, Inject, } from '@angular/core';
-import * as SimpleMDE from 'simplemde';
 
-interface ContentModel {
-  mark: string,
-  html: string,
-  text: string,
-}
+import { MarkdownToolbar } from "./markdown.toolbar";
 
 @Component({
   selector: 'app-markdown',
@@ -26,24 +22,27 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
   public placeholder: ElementRef;
 
   @Input()
+  public type: string;
+
+  @Input()
   public content: any;
 
   @Output()
   public contentChange = new EventEmitter<string>();
 
   @Output()
-  public changed = new EventEmitter<ContentModel>();
+  public changed = new EventEmitter<{ mark: string, html: string, text: string }>();
 
   private editor: SimpleMDE;
 
-  constructor() {
-
+  constructor(private toolbar: MarkdownToolbar) {
   }
 
   public ngOnInit() {
   }
 
   public ngAfterViewInit(): void {
+
     let config = {
       element: this.placeholder.nativeElement,
       autoDownloadFontAwesome: false,
@@ -52,37 +51,12 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
       status: false,
       autofocus: true,
       tabSize: 4,
+      showIcons: this.toolbar.shown(this.type),
+      hideIcons: this.toolbar.hidden(this.type),
     };
     this.editor = new SimpleMDE(config);
-    this.editor.value(this.content || "")
+    this.editor.value(this.content || "");
 
-    // No Debounce
-    // this.editor.codemirror.on("change", (context, change) => {
-    //   let markup = context.getValue();
-    //   this.contentChange.emit(markup);
-
-    //   this.changed.emit({
-    //     mark: this.mark(markup),
-    //     html: this.html(markup),
-    //     text: this.text(markup),
-    //   });
-    // });
-
-    // Debounce with fromEventPattern
-    // var onPattern = callback => this.editor.codemirror.on("change", callback);
-    // var offPattern = callback => this.editor.codemirror.off("change", callback);
-    // Observable
-    //   .fromEventPattern(onPattern, offPattern)
-    //   .map((context: any, change: any) => {
-    //     return context.getValue()
-    //   })
-    //   .debounceTime(750)
-    //   .distinctUntilChanged()
-    //   .subscribe((content: string) => {
-    //     console.log(content)
-    //   });
-
-    // Debounce with fromEvent
     Observable
       .fromEvent(this.editor.codemirror, 'change')
       .map((context: any, change: any) => {
@@ -90,8 +64,13 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
       })
       .debounceTime(750)
       .distinctUntilChanged()
-      .subscribe((content: string) => {
-        console.log(content)
+      .subscribe((markup: string) => {
+        this.contentChange.emit(markup);
+        this.changed.emit({
+          mark: this.mark(markup),
+          html: this.html(markup),
+          text: this.text(markup),
+        });
       });
   }
 
