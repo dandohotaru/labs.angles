@@ -5,6 +5,7 @@ import { CustomValidators as Custom } from './shared/validators/custom.validator
 export interface Company {
   id: number,
   name: string,
+  description: string,
   tags: string[],
   stars: number,
   rated: boolean,
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
     this.company = {
       id: 101,
       name: "Greek Heroes",
+      description: "*badass* **heros**",
       tags: ["immortals", "mortals"],
       stars: 3,
       rated: false,
@@ -33,6 +35,7 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.form = this.builder.group({
       name: [this.company.name, Validators.required],
+      description: [this.company.description, Validators.required],
       stars: [this.company.stars, Custom.notlow],
       tags: [this.company.tags, Custom.notempty],
     });
