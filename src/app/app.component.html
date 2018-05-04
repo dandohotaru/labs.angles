@@ -12,8 +12,7 @@
   <div style="padding-bottom: 15px">
     <strong>Description</strong>
     <div>
-      <!-- <textarea formControlName="description"></textarea> -->
-      <app-markdown></app-markdown>
+      <app-markdown [model]="company.description" (modelChange)="log($event);company.description=$event"></app-markdown>
     </div>
   </div>
 
@@ -58,6 +57,9 @@
 
 <!-- Debug -->
 <div style="padding-top: 15px">
+
+  <strong>Model</strong>
+  <pre>{{company | json}}</pre>
 
   <strong>Form</strong>
   <pre>{{form.status | json}}</pre>
