@@ -1,7 +1,19 @@
+import "rxjs/add/observable/fromEvent";
+import "rxjs/add/observable/fromEventPattern";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/distinctUntilChanged";
+import { Observable } from "rxjs/Observable";
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ViewChild, ElementRef, InjectionToken, Inject, } from '@angular/core';
 import * as SimpleMDE from 'simplemde';
+
+interface ContentModel {
+  mark: string,
+  html: string,
+  text: string,
+}
 
 @Component({
   selector: 'app-markdown',
@@ -14,10 +26,13 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
   public placeholder: ElementRef;
 
   @Input()
-  public model: any;
+  public content: any;
 
   @Output()
-  public modelChange = new EventEmitter<string>();
+  public contentChange = new EventEmitter<string>();
+
+  @Output()
+  public changed = new EventEmitter<ContentModel>();
 
   private editor: SimpleMDE;
 
@@ -39,32 +54,62 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
       tabSize: 4,
     };
     this.editor = new SimpleMDE(config);
-    this.editor.value(this.model || "")
+    this.editor.value(this.content || "")
 
-    this.editor.codemirror.on('change', (context, change) => {
-      const value = context.getValue();
-      this.modelChange.emit(value);
-    });
+    // No Debounce
+    // this.editor.codemirror.on("change", (context, change) => {
+    //   let markup = context.getValue();
+    //   this.contentChange.emit(markup);
+
+    //   this.changed.emit({
+    //     mark: this.mark(markup),
+    //     html: this.html(markup),
+    //     text: this.text(markup),
+    //   });
+    // });
+
+    // Debounce with fromEventPattern
+    // var onPattern = callback => this.editor.codemirror.on("change", callback);
+    // var offPattern = callback => this.editor.codemirror.off("change", callback);
+    // Observable
+    //   .fromEventPattern(onPattern, offPattern)
+    //   .map((context: any, change: any) => {
+    //     return context.getValue()
+    //   })
+    //   .debounceTime(750)
+    //   .distinctUntilChanged()
+    //   .subscribe((content: string) => {
+    //     console.log(content)
+    //   });
+
+    // Debounce with fromEvent
+    Observable
+      .fromEvent(this.editor.codemirror, 'change')
+      .map((context: any, change: any) => {
+        return context.getValue()
+      })
+      .debounceTime(750)
+      .distinctUntilChanged()
+      .subscribe((content: string) => {
+        console.log(content)
+      });
   }
 
   public ngOnDestroy(): void {
     this.editor = null
   }
 
-  private mark(): string {
-    var content = this.editor.value();
-    return content;
+  private mark(markup: string): string {
+    return markup;
   }
 
-  private html(): string {
-    var content = this.editor.value();
-    return this.editor.markdown(content);
+  private html(markup: string): string {
+    return this.editor.markdown(markup);
   }
 
-  private text(): string {
-    var content = this.editor.value();
-    // based on npm module remove-markdown 0.0.6
-    var output = content
+  private text(markup: string): string {
+    // based on npm module remove-markdown
+    var output = markup
       // strip list leaders
       .replace(/^([\s\t]*)([\*\-\+]|\d\.)\s+/gm, '$1')
       // Remove HTML tags
