@@ -18,6 +18,8 @@ import { MarkdownToolbar } from "./markdown.toolbar";
 })
 export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  private editor: SimpleMDE;
+
   @ViewChild('placeholder')
   public placeholder: ElementRef;
 
@@ -25,15 +27,10 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
   public type: string;
 
   @Input()
-  public content: any;
-
-  @Output()
-  public contentChange = new EventEmitter<string>();
+  public value: string;
 
   @Output()
   public changed = new EventEmitter<{ mark: string, html: string, text: string }>();
-
-  private editor: SimpleMDE;
 
   constructor(private toolbar: MarkdownToolbar) {
   }
@@ -55,7 +52,7 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
       hideIcons: this.toolbar.hidden(this.type),
     };
     this.editor = new SimpleMDE(config);
-    this.editor.value(this.content || "");
+    this.editor.value(this.value || "");
 
     Observable
       .fromEvent(this.editor.codemirror, 'change')
@@ -65,12 +62,14 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
       .debounceTime(750)
       .distinctUntilChanged()
       .subscribe((markup: string) => {
-        this.contentChange.emit(markup);
-        this.changed.emit({
-          mark: this.mark(markup),
-          html: this.html(markup),
-          text: this.text(markup),
-        });
+        let payload = markup
+          ? {
+            mark: this.mark(markup),
+            html: this.html(markup),
+            text: this.text(markup),
+          }
+          : null;
+        this.changed.emit(payload);
       });
   }
 
