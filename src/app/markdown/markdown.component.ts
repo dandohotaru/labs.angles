@@ -1,10 +1,6 @@
-import "rxjs/add/observable/fromEvent";
-import "rxjs/add/observable/fromEventPattern";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/debounceTime";
-import "rxjs/add/operator/distinctUntilChanged";
-import { Observable } from "rxjs/Observable";
 import * as SimpleMDE from 'simplemde';
+import { Observable, fromEvent, fromEventPattern } from "rxjs";
+import { map, debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ViewChild, ElementRef, InjectionToken, Inject, } from '@angular/core';
@@ -53,14 +49,14 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     this.editor = new SimpleMDE(config);
     this.editor.value(this.value || "");
-
-    Observable
-      .fromEvent(this.editor.codemirror, 'change')
-      .map((context: any, change: any) => {
-        return context.getValue()
-      })
-      .debounceTime(750)
-      .distinctUntilChanged()
+    
+    fromEvent(this.editor.codemirror, 'change')
+      .pipe(
+        map((context: any) => {
+          return context[0].getValue()
+        }),
+        debounceTime(750),
+        distinctUntilChanged())
       .subscribe((markup: string) => {
         let payload = markup
           ? {
@@ -82,7 +78,7 @@ export class MarkdownComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private html(markup: string): string {
-    return this.editor.markdown(markup);
+    return (this.editor as any).markdown(markup);
   }
 
   private text(markup: string): string {
