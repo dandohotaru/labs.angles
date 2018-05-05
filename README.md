@@ -2,7 +2,10 @@
 the one with custom form input control using ControlValueAccessor 
 - [x] tags
 - [x] stars
-- [ ] markdown
+- [x] markdown
+- [ ] toggle
+- [ ] slider
+- [ ] ...
 
 ## Problem
 Angular custom form input  
