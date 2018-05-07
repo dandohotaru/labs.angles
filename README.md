@@ -5,6 +5,7 @@ the one with custom form input control using ControlValueAccessor
 - [x] markdown
 - [ ] toggle
 - [ ] slider
+- [ ] chips
 - [ ] ...
 
 ## Problem
@@ -34,3 +35,17 @@ http://restlet.com/company/blog/2016/02/11/implementing-angular2-forms-beyond-ba
 
 Implementing Angular2 forms – Beyond basics (part 2)  
 http://restlet.com/company/blog/2016/02/17/implementing-angular2-forms-beyond-basics-part-2/
+
+### toggle
+https://github.com/webcat12345/ngx-ui-switch
+https://github.com/coryrylan/ngx-lite/tree/master/src/lib/ngx-input-switch
+
+### tags
+https://github.com/coryrylan/ngx-lite/tree/master/src/lib/ngx-input-tag
+
+### range
+https://github.com/coryrylan/ngx-lite/tree/master/src/lib/ngx-input-range
+https://github.com/PavelPleshko/ngx-slider-moby
+https://codepen.io/Pierre_Hamel/pen/ocJEH
+https://stackoverflow.com/questions/4753946/html5-slider-with-two-inputs-possible
+https://refreshless.com/nouislider/
