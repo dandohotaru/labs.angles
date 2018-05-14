@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MarkdownComponent } from './markdown.component';
 import { MarkdownAccessor } from './markdown.accessor';
 import { MarkdownToolbar } from './markdown.toolbar';
+import { MarkdownService } from './markdown.service';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { MarkdownToolbar } from './markdown.toolbar';
     MarkdownAccessor
   ],
   providers: [
-    MarkdownToolbar
+    MarkdownToolbar,
+    MarkdownService,
   ],
 })
 export class MarkdownModule { }
