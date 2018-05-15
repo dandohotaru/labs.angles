@@ -1,0 +1,69 @@
+
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+
+  <!-- Name -->
+  <div style="padding-bottom: 15px">
+    <strong>Name</strong>
+    <app-field>
+      <input formControlName="name" />
+    </app-field>
+  </div>
+
+  <!-- Description -->
+  <div style="padding-bottom: 15px">
+    <strong>Description</strong>
+    <div>
+      <app-markdown formControlName="description"></app-markdown>
+    </div>
+  </div>
+
+  <!-- Stars -->
+  <div style="padding-bottom: 15px">
+    <strong>Stars</strong>
+    <div>
+      <app-stars formControlName="stars" lock="false"></app-stars>
+    </div>
+    <strong>Rates</strong>
+    <div>
+      <app-rates formControlName="stars"></app-rates>
+
+      <div *ngIf="form.get('stars').hasError('low')" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{form.get('stars').getError('low')}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Tags -->
+  <div style="padding-bottom: 15px">
+    <strong>Tags</strong>
+
+    <app-tags title="Tags" formControlName="tags" (changed)="log($event)">
+    </app-tags>
+
+    <div *ngIf="form.get('tags').hasError('empty')" class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{form.get('tags').getError('empty')}}
+    </div>
+
+  </div>
+
+  <!-- Submit -->
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+<!-- Debug -->
+<div style="padding-top: 15px">
+
+  <strong>Model</strong>
+  <pre>{{company | json}}</pre>
+
+  <strong>Form</strong>
+  <pre>{{form.status | json}}</pre>
+  <pre>{{form.value | json}}</pre>
+
+  <strong>Errors</strong>
+  <app-errors [form]="form"></app-errors>
+</div>
