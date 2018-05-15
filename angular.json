@@ -18,10 +18,10 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/assets/favicon.ico"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/styles.css"
             ],
             "scripts": [
               "node_modules/simplemde/dist/simplemde.min.js"
@@ -75,11 +75,11 @@
               "node_modules/simplemde/dist/simplemde.min.js"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/styles.css"
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/assets/favicon.ico"
             ]
           }
         },
@@ -129,11 +129,12 @@
       "spec": false
     },
     "@schematics/angular:component": {
-      "inlineStyle": true,
-      "inlineTemplate": true,
+      "inlineStyle": false,
+      "inlineTemplate": false,
       "spec": false,
       "prefix": "app",
-      "styleext": "css"
+      "styleext": "css",
+      "flat": true
     },
     "@schematics/angular:directive": {
       "spec": false,

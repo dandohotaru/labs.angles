@@ -10,12 +10,14 @@ import { RatesModule } from './shared/components/stars/rates.module';
 import { ValidationModule } from './shared/validators/validation.module';
 
 import { AppComponent } from './app.component';
+import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    LayoutModule,
     ValidationModule,
     MarkdownModule,
     FieldModule,
