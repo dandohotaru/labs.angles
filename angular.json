@@ -144,7 +144,8 @@
       "spec": false
     },
     "@schematics/angular:module": {
-      "spec": false
+      "spec": false,
+      "flat": true
     },
     "@schematics/angular:pipe": {
       "spec": false

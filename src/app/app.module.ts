@@ -11,10 +11,22 @@ import { ValidationModule } from './shared/validators/validation.module';
 
 import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
+import { HeroesModule } from './heroes/heroes.module';
+import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+const routes: Routes = [
+  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  // { path: 'dashboard', component: DashboardComponent },
+  // { path: 'detail/:id', component: HeroDetailComponent },
+  // { path: 'heroes', component: HeroesComponent }
+]; 
 
 @NgModule({
   imports: [
+    CommonModule,
     BrowserModule,
+    RouterModule.forRoot(routes),
     FormsModule,
     ReactiveFormsModule,
     LayoutModule,
@@ -24,6 +36,7 @@ import { LayoutModule } from './layout/layout.module';
     TagsModule,
     StarsModule,
     RatesModule,
+    HeroesModule,
   ],
   declarations: [
     AppComponent,
@@ -35,3 +48,5 @@ import { LayoutModule } from './layout/layout.module';
   ]
 })
 export class AppModule { }
+
+
